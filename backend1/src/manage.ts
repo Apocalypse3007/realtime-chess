@@ -43,11 +43,11 @@ export class Manage {
                     console.log(`User added to pending queue. Pending users: ${this.pendingUsers!.length}`);
                 }
             } else if (message.type === MOVE) {
-                console.log(`Move requested: ${message.move.from} to ${message.move.to}`);
+                console.log(`Move requested: ${message.payload.from} to ${message.payload.to}`);
                 const game = this.games.find(g => g.player1 === socket || g.player2 === socket);
                 if (game) {
                     console.log("Game found, making move");
-                    game.makeMove(socket, message.move);
+                    game.makeMove(socket, message.payload);
                 } else {
                     console.error("Game not found for the move");
                     socket.send(JSON.stringify({

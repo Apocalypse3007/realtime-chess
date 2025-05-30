@@ -13,8 +13,3 @@ wss.on('connection', function connection(ws) {
         manager.removeUser(ws);
     });
 });
-//  "type":"move",
-//     "move":{
-//         "from": "a2",
-//         "to" : "a3"
-//     }

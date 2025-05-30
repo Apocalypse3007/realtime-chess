@@ -30,6 +30,15 @@ class Game {
     }
     makeMove(socket, move) {
         var _a, _b, _c, _d;
+        // Add guard clause to prevent undefined errors
+        if (!move || typeof move.from !== "string" || typeof move.to !== "string") {
+            console.error("Invalid move object received:", move);
+            socket.send(JSON.stringify({
+                type: "error",
+                payload: { message: "Invalid move object" }
+            }));
+            return;
+        }
         console.log(`Move attempt from ${socket === this.player1 ? "player1" : "player2"}: ${move.from} to ${move.to}`);
         if (!this.board) {
             return console.error("Board is not initialized");
@@ -47,21 +56,15 @@ class Game {
             // Make the move on the board
             const result = this.board.move(move);
             console.log("Move made successfully:", result);
-            // Send the move to the other player
-            if (socket === this.player1) {
-                console.log("Sending move to player2");
-                (_a = this.player2) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify({
-                    type: message_1.MOVE,
-                    payload: move
-                }));
-            }
-            else {
-                console.log("Sending move to player1");
-                (_b = this.player1) === null || _b === void 0 ? void 0 : _b.send(JSON.stringify({
-                    type: message_1.MOVE,
-                    payload: move
-                }));
-            }
+            // Send the move to both players
+            (_a = this.player1) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify({
+                type: message_1.MOVE,
+                payload: move
+            }));
+            (_b = this.player2) === null || _b === void 0 ? void 0 : _b.send(JSON.stringify({
+                type: message_1.MOVE,
+                payload: move
+            }));
             // Increment move counter
             this.moveCount++;
             // Check for game over

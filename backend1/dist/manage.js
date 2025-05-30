@@ -37,11 +37,11 @@ class Manage {
                     }
                 }
                 else if (message.type === message_1.MOVE) {
-                    console.log(`Move requested: ${message.move.from} to ${message.move.to}`);
+                    console.log(`Move requested: ${message.payload.from} to ${message.payload.to}`);
                     const game = this.games.find(g => g.player1 === socket || g.player2 === socket);
                     if (game) {
                         console.log("Game found, making move");
-                        game.makeMove(socket, message.move);
+                        game.makeMove(socket, message.payload);
                     }
                     else {
                         console.error("Game not found for the move");

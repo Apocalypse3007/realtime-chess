@@ -67,24 +67,17 @@ export class Game {
             const result = this.board.move(move);
             console.log("Move made successfully:", result);
             
-            // Send the move to the other player
-            if (socket === this.player1) {
-                console.log("Sending move to player2");
-                this.player2?.send(JSON.stringify({
-                    type: MOVE,
-                    payload: move
-                }));
-            } else {
-                console.log("Sending move to player1");
-                this.player1?.send(JSON.stringify({
-                    type: MOVE,
-                    payload: move
-                }));
-            }
-            
+            // Send the move to both players
+            this.player1?.send(JSON.stringify({
+                type: MOVE,
+                payload: move
+            }));
+            this.player2?.send(JSON.stringify({
+                type: MOVE,
+                payload: move
+            }));
             // Increment move counter
             this.moveCount++;
-            
             // Check for game over
             if (this.board.isGameOver()) {
                 const winner = this.board.turn() === 'w' ? 'black' : 'white';
