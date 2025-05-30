@@ -15,12 +15,12 @@ export const Chessboard = ({ board, socket }: {
   const getPieceImage = (piece: { type: PieceSymbol; color: Color }) => {
     const file = piece.type.toUpperCase();
     const col = piece.color === "w" ? "w" : "b";
-    return `/assets/chess/${col}${file}.png`;
+    return `/${col}${file}.png`;
   };
 
   const getSquareColor = (i: number, j: number, isHovered: boolean, isSelected: boolean) => {
     const isLight = (i + j) % 2 === 0;
-    const baseColor = isLight ? "bg-emerald-600" : "bg-emerald-200";
+    const baseColor = isLight ? "bg-green-600" : "bg-yellow-100";
     
     if (isSelected) {
       return isLight ? "bg-blue-500" : "bg-blue-300";
@@ -83,7 +83,7 @@ export const Chessboard = ({ board, socket }: {
                 {(i === 7 || j === 0) && (
                   <span className={`absolute text-xs font-bold
                     ${i === 7 ? 'bottom-0 right-1' : 'top-1 left-1'}
-                    ${(i + j) % 2 === 0 ? 'text-emerald-200' : 'text-emerald-800'}`}>
+                    ${(i + j) % 2 === 0 ? 'text-black' : 'text-black'}`}>
                     {i === 7 ? String.fromCharCode(97 + j) : 8 - i}
                   </span>
                 )}
