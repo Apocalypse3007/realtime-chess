@@ -36,6 +36,16 @@ export class Game {
         from: string,
         to: string,
     }) {
+        // Add guard clause to prevent undefined errors
+        if (!move || typeof move.from !== "string" || typeof move.to !== "string") {
+            console.error("Invalid move object received:", move);
+            socket.send(JSON.stringify({
+                type: "error",
+                payload: { message: "Invalid move object" }
+            }));
+            return;
+        }
+
         console.log(`Move attempt from ${socket === this.player1 ? "player1" : "player2"}: ${move.from} to ${move.to}`);
         
         if (!this.board) {
